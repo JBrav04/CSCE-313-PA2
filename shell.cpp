@@ -55,9 +55,12 @@ string promptText() {
     }
     */
 
+    const char* user = getenv("USER");
+    if (!user) user = "user";
+
     string cwd = getCurrentDir();
 
-    return string(timeBuf) + " " + /*getenv("USER")*/"user" + ":" + cwd + "$" + " ";
+    return string(timeBuf) + " " + user + ":" + cwd + "$" + " ";
 }
 
 string changeDirectory(Tokenizer& tknr, string prevwd) {
