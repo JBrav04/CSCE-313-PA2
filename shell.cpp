@@ -60,7 +60,7 @@ string promptText() {
 
     string cwd = getCurrentDir();
 
-    return string(timeBuf) + " " + user + ":" + cwd + "$" + " ";
+    return string(timeBuf) + " " + user + ":" + cwd + "$";
 }
 
 string changeDirectory(Tokenizer& tknr, string prevwd) {
