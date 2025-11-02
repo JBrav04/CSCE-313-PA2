@@ -47,15 +47,20 @@ string promptText(bool simple = false) {
         return "mysh> ";
     
     time_t now = time(nullptr);
-    string timeString = ctime(&now);
+    struct tm* t = localtime(&now);
 
+    char timeBuf[16];  // enough for "Sep 23 18:31:46"
+    strftime(timeBuf, sizeof(timeBuf), "%b %d %H:%M:%S", t);
+
+    /*
     if (!timeString.empty() && timeString.back() == '\n') {
         timeString.pop_back();
     }
+    */
 
     string cwd = getCurrentDir();
 
-    return timeString + " " + getenv("USER") + ":" + cwd + "$";
+    return string(timeBuf) + " " + getenv("USER") + ":" + cwd + "$";
 }
 
 string changeDirectory(Tokenizer& tknr, string prevwd) {
@@ -236,7 +241,7 @@ int main () {
         //check bg processes
         reapBackgroundPIDs();
 
-        cout << YELLOW << promptText(true) << NC << " ";
+        cout << YELLOW << promptText() << NC << " ";
         
         // get user inputted command
         string input;
