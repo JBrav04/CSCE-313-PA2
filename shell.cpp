@@ -50,7 +50,7 @@ string promptText(bool simple = false) {
     struct tm* t = localtime(&now);
 
     char timeBuf[16];  // enough for "Sep 23 18:31:46"
-    strftime(timeBuf, sizeof(timeBuf), "%b %d %H:%M:%S", t);
+    strftime(timeBuf, sizeof(timeBuf), "%b %e %H:%M:%S", t);
 
     /*
     if (!timeString.empty() && timeString.back() == '\n') {
