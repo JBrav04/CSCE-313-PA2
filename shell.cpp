@@ -41,7 +41,10 @@ string getCurrentDir() {
     return cwd;
 }
 
-string promptText() {
+string promptText(bool simple = false) {
+
+    if (simple)
+        return "mysh> ";
     
     time_t now = time(nullptr);
     string timeString = ctime(&now);
@@ -230,7 +233,7 @@ int main () {
 
     //command prompt loop
     for (;;) {
-        cout << YELLOW << promptText() << NC << " ";
+        cout << YELLOW << promptText(true) << NC << " ";
 
         //check bg processes
         reapBackgroundPIDs();
