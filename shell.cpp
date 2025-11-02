@@ -41,10 +41,7 @@ string getCurrentDir() {
     return cwd;
 }
 
-string promptText(bool simple = false) {
-
-    if (simple)
-        return "mysh> ";
+string promptText() {
     
     time_t now = time(nullptr);
     struct tm* t = localtime(&now);
@@ -60,7 +57,7 @@ string promptText(bool simple = false) {
 
     string cwd = getCurrentDir();
 
-    return string(timeBuf) + " " + getenv("USER") + ":" + cwd + "$" + " ";
+    return string(timeBuf) + " " + /*getenv("USER")*/"user" + ":" + cwd + "$" + " ";
 }
 
 string changeDirectory(Tokenizer& tknr, string prevwd) {
