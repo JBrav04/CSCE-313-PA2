@@ -233,10 +233,10 @@ int main () {
 
     //command prompt loop
     for (;;) {
-        cout << YELLOW << promptText(true) << NC << " ";
-
         //check bg processes
         reapBackgroundPIDs();
+
+        cout << YELLOW << promptText(true) << NC << " ";
         
         // get user inputted command
         string input;
