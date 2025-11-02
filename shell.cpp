@@ -45,22 +45,20 @@ string promptText() {
     
     time_t now = time(nullptr);
     struct tm* t = localtime(&now);
-
-    char timeBuf[16];  // enough for "Sep 23 18:31:46"
+    char timeBuf[20]; 
     strftime(timeBuf, sizeof(timeBuf), "%b %e %H:%M:%S", t);
-
-    /*
-    if (!timeString.empty() && timeString.back() == '\n') {
-        timeString.pop_back();
-    }
-    */
 
     const char* user = getenv("USER");
     if (!user) user = "user";
 
-    string cwd = getCurrentDir();
+    char cwd[PATH_MAX];
+    if (!getcwd(cwd, sizeof(cwd))) {
+        perror("getcwd failed");
+        cwd[0] = '\0';
+    }
 
-    return string(timeBuf) + " " + user + ":" + cwd + "$";
+    std::string prompt = std::string(timeBuf) + " " + user + ":" + cwd + "$ ";
+    return prompt;
 }
 
 string changeDirectory(Tokenizer& tknr, string prevwd) {
@@ -241,7 +239,7 @@ int main () {
         //check bg processes
         reapBackgroundPIDs();
 
-        cout << YELLOW << promptText() << NC << " ";
+        cout << YELLOW << promptText() << NC << flush;
         
         // get user inputted command
         string input;
