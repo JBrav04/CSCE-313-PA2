@@ -239,7 +239,7 @@ int main () {
         //check bg processes
         reapBackgroundPIDs();
 
-        cout << YELLOW << promptText() << NC << flush;
+        cout /*<< YELLOW*/ << promptText() /*<< NC*/ << flush;
         
         // get user inputted command
         string input;
