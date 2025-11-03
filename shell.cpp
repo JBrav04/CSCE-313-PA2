@@ -77,13 +77,13 @@ void processInput(const char* file) {
     int fd = open(file, O_RDONLY);
     if (fd == -1) {
         perror("open");
-        exit(2);
+        _exit(2);
     }
 
     if (dup2(fd, STDIN_FILENO) == -1) { 
         perror("dup2"); 
         close(fd);
-        exit(2);
+        _exit(2);
     }
     close(fd);
 }
@@ -92,13 +92,13 @@ void processOutput(const char* file) {
     int fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
     if (fd == -1) {
         perror("open");
-        exit(2);
+        _exit(2);
     }
 
     if (dup2(fd, STDOUT_FILENO) == -1) { 
         perror("dup2"); 
         close(fd);
-        exit(2);
+        _exit(2);
     }
     close(fd);
 }
@@ -138,7 +138,7 @@ void processCommand(Command* cmd) {
 
         if (execvp(argv.at(0), argv.data()) < 0) {
             perror("execvp");
-            exit(2);
+            _exit(2);
         }
     }
     else { 
