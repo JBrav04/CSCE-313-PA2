@@ -53,7 +53,7 @@ string promptText() {
     getcwd(cwd, sizeof(cwd));
 
     const char* user = getenv("USER");
-    if (!user) user = "user";
+    if (!user) user = "root";
 
     std::string prompt = std::string(timeStr) + " " + user + ":" + cwd + "$ ";
     return prompt;
