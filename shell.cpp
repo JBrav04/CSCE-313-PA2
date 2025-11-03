@@ -114,6 +114,9 @@ pid_t forkProcess() {
 
 
 void processCommand(Command* cmd) {
+    int saved_stdin = dup(STDIN_FILENO);
+    int saved_stdout = dup(STDOUT_FILENO);
+
     pid_t pid = forkProcess();
 
     if (pid == 0) {  // if child, exec to run command
@@ -148,6 +151,10 @@ void processCommand(Command* cmd) {
             backgroundPIDs.push_back(pid);
         }
     }
+    dup2(saved_stdin, STDIN_FILENO);
+    dup2(saved_stdout, STDOUT_FILENO);
+    close(saved_stdin);
+    close(saved_stdout);
 }
 
 void reapBackgroundPIDs() {
