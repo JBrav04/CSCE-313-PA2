@@ -44,22 +44,21 @@ string getCurrentDir() {
 string promptText() {
     
     time_t now = time(nullptr);
-    struct tm* t = localtime(&now);
-    char timeBuf[20]; 
-    strftime(timeBuf, sizeof(timeBuf), "%b %e %H:%M:%S", t);
+    struct tm *t = localtime(&now);
+
+    char timeStr[32];
+    strftime(timeStr, sizeof(timeStr), "%b %d %H:%M:%S", t);
+
+    char cwd[PATH_MAX];
+    getcwd(cwd, sizeof(cwd));
 
     const char* user = getenv("USER");
     if (!user) user = "user";
 
-    char cwd[PATH_MAX];
-    if (!getcwd(cwd, sizeof(cwd))) {
-        perror("getcwd failed");
-        cwd[0] = '\0';
-    }
-
-    std::string prompt = std::string(timeBuf) + " " + user + ":" + cwd + "$ ";
+    std::string prompt = std::string(timeStr) + " " + user + ":" + cwd + "$ ";
     return prompt;
 }
+
 
 string changeDirectory(Tokenizer& tknr, string prevwd) {
     //cout << tknr.commands.at(0)->args.at(0) << endl;
