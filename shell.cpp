@@ -113,7 +113,7 @@ pid_t forkProcess() {
 }
 
 
-void processCommand(Command* cmd, bool piped = false) {
+void processCommand(Command* cmd) {
     pid_t pid = forkProcess();
 
     if (pid == 0) {  // if child, exec to run command
@@ -123,9 +123,6 @@ void processCommand(Command* cmd, bool piped = false) {
         }
         if (cmd->hasOutput()) {
             processOutput(cmd->out_file.c_str());
-        }
-        if (piped) {
-
         }
 
         vector<char*> argv;
@@ -146,9 +143,6 @@ void processCommand(Command* cmd, bool piped = false) {
 
         if (!cmd->isBackground()) {
             waitpid(pid, &status, 0);
-            if (status > 1) {  // exit if child didn't exec properly
-                exit(status);
-            } 
         }
         else {
             backgroundPIDs.push_back(pid);
